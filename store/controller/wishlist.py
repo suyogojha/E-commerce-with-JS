@@ -15,23 +15,33 @@ def index(request):
 
 def addtowishlist(request):
     if request.method == 'POST':
-       if request.user.is_authenticated:
-           prod_id = int(request.POST.get('product_id'))
-           product_check = Product.objects.get(id=prod_id)
-           if(product_check):
-               if(wishlist.objects.filter(user=request.user, product_id=prod_id)):
-                   return JsonResponse({'status': "Product already in wishlist"})
-               else:
-                   wishlist.objects.create(
-                       user=request.user, product_id=prod_id)
-                   return JsonResponse({'status': "Product added to wishlist"})
-           else:
-               return JsonResponse({'status': "No such Product Found"})
-       else:
+        if request.user.is_authenticated:
+            prod_id = int(request.POST.get('product_id'))
+            product_check = Product.objects.get(id=prod_id)
+            if(product_check):
+                if(wishlist.objects.filter(user=request.user, product_id=prod_id)):
+                    return JsonResponse({'status': "Product already in wishlist"})
+                else:
+                    wishlist.objects.create(
+                        user=request.user, product_id=prod_id)
+                    return JsonResponse({'status': "Product added to wishlist"})
+            else:
+                return JsonResponse({'status': "No such Product Found"})
+        else:
             return JsonResponse({'status': "Login to continue"})
     return redirect('/')
-           
-                   
-                
-# def deletewishlistitem(request):
-    
+
+
+def deletewishlistitem(request):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            prod_id = int(request.POST.get('product_id'))
+            if(wishlist.objects.filter(user=request.user, product_id=prod_id)):
+                wishlistitem = wishlist.objects.get(product_id=prod_id, user=request.user)
+                wishlistitem.delete()
+                return JsonResponse({'status': "Product removed from Wishlist"})
+            else:
+                return JsonResponse({'status': "Product not found in Wishlist"})
+        else:
+            return JsonResponse({'status': "Login to Continue"})
+    return redirect('/')

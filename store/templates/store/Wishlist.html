@@ -6,7 +6,7 @@
 <div class="py-3 bg-primary">
   <div class="container">
     <a class="text-white" href="{% url 'home' %}">Home /</a>
-    <a class="text-white" href="{% url 'Wishlist' %}">Wishlist /</a>
+    <a class="text-white" href="{% url 'Wishlists' %}">Wishlist /</a>
   </div>
 </div>
 
@@ -16,7 +16,7 @@
       <div class="row">
           <div class="col-md-12">
               <div class="card shadow ">
-                  <div class="card-body wishdata">
+                  <div class="card-body Wishdata">
                       {% if Wishlist %}
                           {% for item in Wishlist %}
                               <div class="row product_data">

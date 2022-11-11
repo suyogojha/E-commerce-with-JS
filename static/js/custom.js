@@ -107,21 +107,20 @@ $(document).ready(function(){
     
     
     
-    
-    $('.delete-wishlist-item').click(function (e){
+    $(document).on('click','.delete-wishlist-item', function(e){
         e.preventDefault();
         var product_id = $(this).closest('.product_data').find('.prod_id').val();
         var token = $('input[name=csrfmiddlewaretoken]').val();
         $.ajax({
             method: "POST",
-            url: "delete-wishlist-item",
+            url: "/delete-wishlist-item",
             data:{
                 'product_id': product_id,
                 csrfmiddlewaretoken: token
             },
             success: function(response) {
                 alertify.success(response.status)
-                $('.wishdata').load(location.href + ".wishdata");
+                $('.Wishdata').load(location.href + ".Wishdata");
             }
         });
     });
