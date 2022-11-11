@@ -1,0 +1,40 @@
+{% extends 'store/layouts/main.html' %}
+{% block content %}
+
+<div class="py-3 bg-primary">
+    <div class="container">
+        <a class="text-white" href="{% url 'home' %}">Home /</a>
+        <a class="text-white" href="{% url 'collections' %}">Collections /</a>
+        <a class="text-white" href="{% url 'collectionsviews' category.slug %}">{{ category.name }}</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ category.name }}</h1>
+            <hr>
+            <div class="row">
+                {% for item in products %}
+            <div class="col-md-3">
+                <div class="card">
+                    <a href="{% url 'Productview' item.category.slug item.slug %}">
+                    <div class="card-body">
+                        <div class="category-image">
+                            <img src="{{ item.product_image.url }}" alt="images" class="w-100" >
+                        </div>
+                        <h4 class="text-center"> {{ item.name }}</h4>
+                        <!-- string format will remove numbers after . like 25.00 to 25 -->
+                        <span class="float-start" >{{ item.orginal_price | stringformat:'d' }}</span> 
+                        <span class="float-end" >{{ item.selling_price | stringformat:'d' }}</span>
+                    </div>
+                </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    </div>
+</div>
+
+{% endblock content %}
