@@ -59,3 +59,56 @@ class wishlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    
+    
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    fname = models.CharField(max_length=255, null=False)
+    lname = models.CharField(max_length=255, null=False)
+    email = models.CharField(max_length=255, null=False)
+    phone = models.CharField(max_length=255, null=False)
+    address = models.TextField(null=False)
+    city = models.CharField(max_length=255, null=False)
+    state = models.CharField(max_length=255, null=False)
+    country = models.CharField(max_length=255, null=False)
+    pincode = models.CharField(max_length=255, null=False)
+    total_price = models.FloatField(null=False)
+    payment_mode = models.CharField(max_length=255, null=False)
+    payment_id = models.CharField(max_length=255, null=False)
+    orderstatues = (
+        ('Pending', 'Pending'),
+        ('Out For Shipping', 'Out For Shipping'),
+        ('Completed', 'Completed'),
+    )
+    status = models.CharField(max_length=255, choices=orderstatues, default='Pending')
+    message = models.TextField(null=True)
+    traking_no = models.CharField(max_length=150, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return '{} - {}'.format(self.id, self.traking_no)
+    
+    
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    price = models.FloatField(null=False)
+    quantity = models.IntegerField(null=False)
+    
+    def __str__(self):
+        return '{} - {}'.format(self.id, self.order.traking_no)
+    
+    
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone = models.CharField(max_length=255, null=False)
+    address = models.TextField(null=False)
+    city = models.CharField(max_length=255, null=False)
+    state = models.CharField(max_length=255, null=False)
+    country = models.CharField(max_length=255, null=False)
+    pincode = models.CharField(max_length=255, null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.user.username
