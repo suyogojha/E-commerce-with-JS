@@ -18,6 +18,9 @@
           <li class="nav-item">
             <a class="nav-link {% if request.resolver_match.url_name == 'Wishlists' %} active {% endif %}" href="{% url 'Wishlists' %}">Wishlist</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'myorders' %} active {% endif %}" href="{% url 'myorders' %}">My Orders</a>
+          </li>
           {% if request.user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link " href="{% url 'logoutpage' %}">Logout</a>

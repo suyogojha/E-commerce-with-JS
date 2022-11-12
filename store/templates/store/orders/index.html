@@ -1,0 +1,61 @@
+{% extends 'store/layouts/main.html' %} {% block content %}
+
+
+
+<div class="py-3 bg-primary">
+    <div class="container">
+      <a class="text-white" href="{% url 'home' %}">Home /</a>
+      <a class="text-white" href="{% url 'myorders' %}">My orders /</a>
+    </div>
+  </div>
+
+
+  <div class="container my-3">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header">
+                    <h3>My Orders</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Order Date</th>
+                                <th>Tracking Number</th>
+                                <th>Total Price</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in orders %}
+                                <tr>
+                                    <td>{{ item.created_at }}</td>
+                                    <td>{{ item.traking_no }}</td>
+                                    <td>{{ item.total_price }}</td>
+                                    <td>{{ item.status }}</td>
+                                    <td>
+                                        <a href="{% url 'orderview' item.traking_no %}"  class="btn btn-primary">View</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}
