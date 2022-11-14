@@ -4,6 +4,17 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
+      <div class="search-bar">
+          <form action="{% url 'searchproducts' %}" method="POST">
+            {% csrf_token %}
+          <div class="input-group ">
+            <input type="search" required id="searchproduct" name="productsearch" class="form-control" placeholder="Search">
+            <button type="submit" class="input-group-text" > <i class="fa fa-search"></i> </button>
+          </div>
+        </form>
+      </div>
+
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">

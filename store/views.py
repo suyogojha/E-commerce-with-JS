@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import *
 from django.contrib import messages
+from django.http import JsonResponse
+
 # Create your views here.
 def home(request):
     return render(request, "store/index.html")
@@ -42,7 +44,26 @@ def Productview(request, cate_slug, prod_slug):
     return render(request, "store/products/view.html", context)
     
     
-
+def productlistAjax(request):
+    products= Product.objects.filter(status=0).values_list('name', flat=True)
+    productslist = list(products)
+    
+    return JsonResponse(productslist, safe=False)
         
     
     
+    
+def searchproducts(request):
+    if request.method == 'POST':
+        searchedterm = request.POST.get('productsearch')
+        if searchedterm == "":
+            return redirect(request.META.get('HTTP_REFERER'))
+        else:
+            product = Product.objects.filter(name__contains=searchedterm).first()
+            if product:
+                return redirect('collections/' +product.category.slug+'/'+product.slug)
+            else:
+                messages.info(request, "No product matched your search")
+                return redirect(request.META.get('HTTP_REFERER'))
+                
+    return redirect(request.META.get('HTTP_REFERER'))

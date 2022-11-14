@@ -32,4 +32,9 @@ urlpatterns = [
     path('view-order/<str:t_no>', order.vieworder, name="orderview"),
     
     
+    path('product-list', views.productlistAjax),
+    
+    
+    
+    path('searchproducts', views.searchproducts, name="searchproducts"),
 ]
